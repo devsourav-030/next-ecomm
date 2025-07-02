@@ -26,6 +26,7 @@ import Link from 'next/link'
 import { WEBSITE_LOGIN } from '@/routes/websiteRoute'
 import axios from 'axios';
 import Error from 'next/error';
+import { showToast } from '@/lib/showToast';
 
 const Register = () => {
     const [loading, setLoading] = useState(false)
@@ -61,9 +62,9 @@ const Register = () => {
             }
 
             form.reset();
-            alert(registerResponse.message)
+            showToast('success', registerResponse.message);
         } catch (error) {
-            alert(error.message)
+            showToast('error', error.message);
         }finally{
             setLoading(false);
         }

@@ -25,6 +25,8 @@ import { FaRegEyeSlash } from 'react-icons/fa'
 import { FaRegEye } from 'react-icons/fa6'
 import Link from 'next/link'
 import { WEBSITE_REGISTER } from '@/routes/websiteRoute'
+import axios from 'axios'
+import { showToast } from '@/lib/showToast'
 
 const Login = () => {
     const [loading, setLoading] = useState(false)
@@ -44,8 +46,23 @@ const Login = () => {
         },
     })
 
-    const handleSubmit = async (values) => {
-        console.log(values);
+    const handleLoginSubmit = async (values) => {
+        try {
+            setLoading(true);
+            const { data: registerResponse } = await axios.post('/api/auth/login', values)
+            if (!registerResponse.success) {
+                throw new Error(registerResponse.message);
+            }
+
+            form.reset();
+            showToast('success', registerResponse.message);
+
+        } catch (error) {
+            showToast('error', error.message);
+
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -60,7 +77,7 @@ const Login = () => {
                 </div>
                 <div className='mt-5'>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+                        <form onSubmit={form.handleSubmit(handleLoginSubmit)} className="space-y-8">
                             <div className='mb-5'>
                                 <FormField
                                     control={form.control}

@@ -24,7 +24,7 @@ import { z } from 'zod'
 import { FaRegEyeSlash } from 'react-icons/fa'
 import { FaRegEye } from 'react-icons/fa6'
 import Link from 'next/link'
-import { WEBSITE_REGISTER } from '@/routes/websiteRoute'
+import { WEBSITE_REGISTER, WEBSITE_RESETPASSWORD } from '@/routes/websiteRoute'
 import axios from 'axios'
 import { showToast } from '@/lib/showToast'
 import OtpVerificationForm from '@/components/Application/OtpVerificationForm'
@@ -89,7 +89,7 @@ const Login = () => {
             showToast('error', error.message);
 
         } finally {
-            setLoading(false);
+            setOtpVerificationLoading(false);
         }
     }
     return (
@@ -154,7 +154,7 @@ const Login = () => {
                                             <Link href={WEBSITE_REGISTER} className='text-primary underline'>Create account</Link>
                                         </div>
                                         <div className='mt-2'>
-                                            <Link href="" className='text-primary underline'>Forgot password ?</Link>
+                                            <Link href={WEBSITE_RESETPASSWORD} className='text-primary underline'>Forgot password ?</Link>
                                         </div>
                                     </div>
                                 </form>
